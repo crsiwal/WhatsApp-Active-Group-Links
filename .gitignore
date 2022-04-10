@@ -1,0 +1,11 @@
+*/config/development
+*/logs/log-*.php
+!*/logs/index.html
+*/cache/*
+!*/cache/index.html
+!*/cache/.htaccess
+
+#codeigniter 3
+writable/logs/*
+!writable/logs/index.html
+!writable/logs/.htaccess
