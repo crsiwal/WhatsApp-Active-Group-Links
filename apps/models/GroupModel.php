@@ -27,13 +27,13 @@ if (!class_exists('GroupModel')) {
                     $thumbnail_url = url("", true);
                     $category_url = category_url("", true);
                     $this->db->select("a.name, b.name as category, CONCAT('$category_url', b.slug) as curl, a.invite_key, CONCAT('$group_url', a.invite_key) as url, CONCAT('$thumbnail_url', a.icon_url) as icon");
-                    $this->db->join("category as b", "a.category_id = b.id");
+                    $this->db->from("groups as a");
+                    $this->db->join("category b", "b.id = a.category_id");
                     $this->db->where("a.status", 1);
                 } else {
                     $this->db->select($fields);
+                    $this->db->from("groups as a");
                 }
-
-                $this->db->from("groups as a");
 
                 if (isset($filter["id"])) {
                     $this->db->where("a.id", $filter["id"]);

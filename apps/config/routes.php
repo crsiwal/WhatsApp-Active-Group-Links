@@ -64,6 +64,10 @@ $route['groups/(:any)'] = 'Groups/index/$1';
 $route['groups/(:any)/(:num)'] = 'Groups/index/$1/$2';
 $route['invite/(:any)'] = 'Groups/invite/$1';
 
+// Home page API Routes
+$route['api/group'] = 'Api/group';
+$route['api/subcat'] = 'Api/subcat';
+
 // Administrator Dashboard Routes
 $route['login'] = 'admin/Authentication/login';
 $route['login/google'] = 'admin/Authentication/loginGoogle';
@@ -74,6 +78,7 @@ $route['admin/category'] = 'admin/Taxonomy/index';
 
 // Administrator Dashboard API Routes
 $route['rest/cloud'] = 'admin/restapi/CloudRestAPI/uploadCloudFile';
+$route['rest/recache'] = 'admin/restapi/AssetsRestAPI/reCache';
 
 // Category Routes
 $route['rest/category'] = 'admin/restapi/CategoryRestAPI/getCategoryDetails';

@@ -18,8 +18,8 @@ $config['version'] = '1.0.0';
 $config['minify_css'] = $config['minify_js'] = true;
 
 /** Website Meta Data */
-$config['site_name'] = 'Whatsapp Groups';
-$config['domain_name'] = 'WhatsappGroups.com';
+$config['site_name'] = 'Whatsapp Active Groups Invite Link';
+$config['domain_name'] = 'activelinks.in';
 
 /** Category Default Assets */
 $config['category_default_banner'] = 'source/2022/03/03/bdb2652525fd4b9e38c8760cb8fe9606.jpg';
@@ -94,7 +94,7 @@ $config['yt-endpoint'] = "https://www.googleapis.com/youtube/v3/";
 
 switch (ENVIRONMENT) {
 	case 'production':
-		$config['base_url'] = 'http://localhost.whatsapp.in';
+		$config['base_url'] = 'https://www.activelinks.in';
 		$config['google_UA'] = 'UA-12266-1';
 		break;
 	case 'testing':

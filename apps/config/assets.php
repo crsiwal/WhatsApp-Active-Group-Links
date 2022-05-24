@@ -12,6 +12,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
  *  Rahul Siwal         30/05/2021              Created
  *
  */
+$config['css_minifier'] =  "https://cssminifier.com/raw";
+$config['js_minifier'] =  "https://javascript-minifier.com/raw";
 
 $config['assets_css'] =  array(
 	'bootstrap-css' => 'vendor/bootstrap.min',
@@ -31,3 +33,22 @@ $config['assets_js'] =  array(
 	"sidebar" => "sidebar",
 	"event" => "events",
 );
+
+$config['merge_css'] = [
+	$config['assets_css']["bootstrap-css"],
+	$config['assets_css']["toast-css"],
+];
+$config['merge_minify_css'] = [
+	$config['assets_css']["custom-css"],
+];
+$config['merge_js'] = [
+	$config['assets_js']["jquery"],
+	$config['assets_js']["bootstrap"],
+	$config['assets_js']["toast"],
+];
+$config['merge_minify_js'] = [
+	$config['assets_js']["app"],
+	$config['assets_js']["page"],
+	$config['assets_js']["event"],
+	$config['assets_js']["sidebar"],
+];

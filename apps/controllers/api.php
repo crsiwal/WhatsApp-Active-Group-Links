@@ -1,8 +1,8 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 /* * ***********************************************************************
- *  File: access.php
- *  Path: apps/controllers/api.php
+ *  File: Api.php
+ *  Path: apps/controllers/Api.php
  *  Description: 
  *  
  *  History:

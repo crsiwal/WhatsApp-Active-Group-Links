@@ -45,9 +45,9 @@ if (!class_exists('WhatsApp')) {
             $meta = $this->ci->html->get($html, "meta", false, true);
             $group = $this->ci->html->metatag($meta, ["og:title", "og:image"]);
 
-            if (isset($group["og:title"]) && isset($group["og:image"])) {
+            if (isset($group["og:title"]) && !empty($group["og:title"]) && isset($group["og:image"]) && !empty($group["og:image"])) {
                 $active = false;
-                if ((strpos(strtolower($group["og:title"]), 'whatsapp group invite') === FALSE)) {
+                if (similar_text(strtolower($group["og:title"]), 'whatsappgroupinvite') < 17) {
                     $active = true;
                 }
                 if ($active) {

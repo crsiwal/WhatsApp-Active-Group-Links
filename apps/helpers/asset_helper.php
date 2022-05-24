@@ -20,20 +20,35 @@ function path($path) {
     return FCPATH . $path;
 }
 
-function filePath($filepath) {
-    return path("public/" . $filepath);
+function root_path($path) {
+    return ROOTPATH . $path;
 }
 
+// Public Directory Assets path
 function asset_path($filepath) {
     return path("assets/" . $filepath);
 }
 
+function app_path($path) {
+    return APPPATH . $path;
+}
+
+// Apps Directory Assets path
+function app_asset_path($filepath) {
+    return app_path("assets/" . $filepath);
+}
+
+// Public Directory Assets cache path
+function cache_path($filepath) {
+    return path("assets/cache/" . $filepath);
+}
+
 function store_file_path($file_name = "store") {
-    return path("storage/current/$file_name.log");
+    return root_path("storage/current/$file_name.log");
 }
 
 function store_move_path() {
-    return path("storage/history/" . get_date("Ym") . "/" . get_date("d") . "/");
+    return root_path("storage/history/" . get_date("Ym") . "/" . get_date("d") . "/");
 }
 
 function url($url = "", $return = FALSE) {

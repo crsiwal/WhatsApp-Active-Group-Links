@@ -29,7 +29,7 @@ if (!class_exists('GroupCategory')) {
 		public function upload() {
 			clog("Category CSV File Processing Start", __METHOD__);
 			// Read csv file line by line
-			$csv_file = path("storage/data/category.csv");
+			$csv_file = root_path("storage/data/category.csv");
 			$this->_read_csv_file($csv_file);
 
 			clog("Category CSV File Processing End", __METHOD__);

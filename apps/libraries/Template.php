@@ -240,7 +240,6 @@ if (!class_exists('Template')) {
         private function css() {
             if (minify('css')) {
                 $this->addCss('fontawesome-link-css', true);
-                $this->addCss(['bootstrap-css', 'toast-css']);
                 $compressedFiles = $this->ci->config->item('minified_css_files');
                 if (is_array($compressedFiles) && count($compressedFiles) > 0) {
                     foreach ($compressedFiles as $filename => $path) {
@@ -255,7 +254,6 @@ if (!class_exists('Template')) {
 
         private function javaScript() {
             if (minify('js')) {
-                $this->addJs(['jquery', 'bootstrap', 'toast']);
                 $this->addJs('config', TRUE, TRUE);
                 $compressedFiles = $this->ci->config->item('minified_js_files');
                 if (is_array($compressedFiles) && count($compressedFiles) > 0) {
@@ -273,7 +271,7 @@ if (!class_exists('Template')) {
         private function jsFiles($name) {
             $files = $this->ci->config->item('assets_js');
             if (minify('js')) {
-                $minifiedFiles = $this->ci->config->item('minify_js_files');
+                $minifiedFiles = $this->ci->config->item('minified_js_files');
                 $files = (is_array($minifiedFiles) && count($minifiedFiles) > 0) ? array_merge($files, $minifiedFiles) : $files;
             }
             return isset($files[$name]) ? $files[$name] : FALSE;
@@ -282,7 +280,7 @@ if (!class_exists('Template')) {
         private function cssFiles($name) {
             $files = $this->ci->config->item('assets_css');
             if (minify('css')) {
-                $minifiedFiles = $this->ci->config->item('minify_css_files');
+                $minifiedFiles = $this->ci->config->item('minified_css_files');
                 $files = (is_array($minifiedFiles) && count($minifiedFiles) > 0) ? array_merge($files, $minifiedFiles) : $files;
             }
             return isset($files[$name]) ? $files[$name] : FALSE;
