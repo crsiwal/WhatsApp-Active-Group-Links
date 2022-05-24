@@ -1,18 +1,18 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 /* * ***********************************************************************
- *  File: Request.php
- *  Path: apps/controllers/Request.php
- *  Description: Admin dashboard REST API.
+ *  File: GroupsRestAPI.php
+ *  Path: apps/controllers/admin/restapi/GroupsRestAPI.php
+ *  Description: Admin dashboard Groups REST API.
  *  
  *  History:
  *  Programmer          Date                    Description
  *  -----------         ----------              ----------------
- *  Rahul Siwal         28/02/2022              Created
+ *  Rahul Siwal         04/03/2022              Created
  *  
  */
 
-class Request extends CI_Controller {
+class GroupsRestAPI extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
@@ -28,7 +28,7 @@ class Request extends CI_Controller {
         $this->restapi->response("Invalid Request", TRUE);
     }
 
-    public function updateCategory() {
+    public function updateGroup() {
         $this->load->library("Category");
         $success = false;
         $response = [];
@@ -87,36 +87,7 @@ class Request extends CI_Controller {
         $this->restapi->response($response);
     }
 
-    public function uploadCloudFile() {
-        $error = true;
-        $filename = "file";
-        $source_path = upload_image_path_relative();
-        if (!empty($_FILES[$filename]['name'])) {
-            $uplaod = upload_file($filename, [
-                "upload_path" => $source_path,
-                "allowed_types" => "jpg|jpeg|gif|png",
-                "encrypt_name" => TRUE,
-                "max_size" => 1024
-            ]);
-            if (!$uplaod || (is_array($uplaod) && !isset($uplaod["file_name"]))) {
-                set_error("Unable to upload.");
-            } else {
-                $error = false;
-                $file_relative_path = $source_path . $uplaod["file_name"];
-                $response = [
-                    "message" => "File uploaded",
-                    "url" => url($file_relative_path, true),
-                    "path" => $file_relative_path,
-                ];
-            }
-        } else {
-            set_error("Invalid file.");
-        }
-        $data = (!$error) ? $response  : get_error();
-        $this->restapi->response($data, $error);
-    }
-
-    public function getCategoryDetails() {
+    public function getGroupDetail() {
         $response = [];
         $success = false;
         $this->load->helper(array('form', 'security'));
@@ -142,6 +113,35 @@ class Request extends CI_Controller {
                 $response["childs"] = $this->mod_category->categories(["parent_id" => $category_id], 1000, 0, $fields);
             } else {
                 $this->sessions->set_error("Unable to add this adsize");
+            }
+        } else {
+            set_input_error();
+        }
+        $response = array(
+            "error" => !$success,
+            "data" => ($success) ? $response : $this->sessions->get_error()
+        );
+        $this->restapi->response($response);
+    }
+
+    public function getCategoryGroups() {
+        $response = [];
+        $success = false;
+        $this->load->helper(array('form', 'security'));
+        $this->load->library('form_validation', NULL, 'form');
+        $this->form->set_rules('_ctid', 'Category', 'trim|required|min_length[1]|max_length[30]|xss_clean');
+        if ($this->form->run() != FALSE) {
+            $category_id = $this->input->post('_ctid', true);
+            if (!empty($category_id)) {
+                $this->load->model('GroupModel', 'mod_group');
+                $success = true;
+                $icon_url = url("", true);
+                $fields = ["a.id", "a.name", "CONCAT('$icon_url', a.icon_url) as icon", "a.status"];
+                $page = empty($this->input->post('_p', true)) ? 0 : $this->input->post('_p', true);
+                $response["next"] = $page + 1;
+                $response["childs"] = $this->mod_group->groups(["category_id" => $category_id], 25, ($page  * 25), $fields);
+            } else {
+                $this->sessions->set_error("Unable to get details");
             }
         } else {
             set_input_error();

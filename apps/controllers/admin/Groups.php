@@ -20,11 +20,13 @@ class Groups extends CI_Controller {
     }
 
     public function index() {
+        $this->load->model('CategoryModel', 'mod_category');
         $data = array(
-            'popup' => array('login'),
+            "popup" => array('login'),
+            "categories" =>  $this->mod_category->categories(["parent_id" => 0])
         );
         $this->template->addMeta('title', 'Groups');
-        $this->template->addMeta('description', 'Login to your account.');
+        $this->template->addMeta('description', 'Manage groups uploaded to website.');
         $this->template->header('admin');
         $this->template->show('admin/groups/view', $data, 'groups', 'admin_overview');
     }

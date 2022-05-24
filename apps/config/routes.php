@@ -73,6 +73,13 @@ $route['admin'] = "admin/Dashboard";
 $route['admin/category'] = 'admin/Taxonomy/index';
 
 // Administrator Dashboard API Routes
-$route['rest/category'] = 'admin/Request/getCategoryDetails';
-$route['rest/category/update'] = 'admin/Request/updateCategory';
-$route['rest/cloud'] = 'admin/Request/uploadCloudFile';
+$route['rest/cloud'] = 'admin/restapi/CloudRestAPI/uploadCloudFile';
+
+// Category Routes
+$route['rest/category'] = 'admin/restapi/CategoryRestAPI/getCategoryDetails';
+$route['rest/category/update'] = 'admin/restapi/CategoryRestAPI/updateCategory';
+
+// Groups Routes
+$route['rest/groups'] = 'admin/restapi/GroupsRestAPI/getCategoryGroups';
+$route['rest/group'] = 'admin/restapi/GroupsRestAPI/getGroupDetail';
+$route['rest/group/update'] = 'admin/restapi/GroupsRestAPI/updateGroup';

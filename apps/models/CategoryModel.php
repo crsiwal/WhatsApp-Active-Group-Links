@@ -89,7 +89,6 @@ if (!class_exists('CategoryModel')) {
             }
         }
 
-
         public function category_exist_by($field, $value, $skip_ids = []) {
             try {
                 $this->db->select("id");

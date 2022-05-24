@@ -11,7 +11,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  *  Programmer          Date                    Description
  *  -----------         ----------              ----------------
  *  Rahul Siwal         18/01/2020              Created
- * 
  */
 $config['default_bcc'] = array();
 $config['emails'] = array(

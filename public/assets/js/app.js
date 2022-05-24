@@ -71,6 +71,29 @@ $(document).ready(function () {
         set_attr: function (id, attribute, value) {
             $(`#${id}`).attr(attribute, value);
         },
+        set_session: function (key, value) {
+            this.session[key] = value;
+        },
+        get_session: function (key) {
+            if (this.isset(this.session, key)) {
+                return this.session[key];
+            }
+            return null;
+        },
+        remove_session: function (key) {
+            if (this.isset(this.session, key)) {
+                return delete this.session[key];
+            }
+            return false;
+        },
+        update_session: function (key, value) {
+            if (this.isset(this.session, key)) {
+                this.session[key] = value;
+                return true;
+            } else {
+                return false;
+            }
+        },
         addClass: function (objid, class_name, add_class) {
             add_class = (add_class === false) ? false : true;
             if (this.idExist(objid) === true) {
@@ -106,6 +129,10 @@ $(document).ready(function () {
         idExist: function (id, isClass) {
             let eid = ((isClass === true) ? "." : "#") + id;
             return (this.isUndefined(id) !== true && $(eid).length > 0) ? true : false;
+        },
+        isset: function (array, key) {
+            return (key in array) ? true : false;
+            //return (typeof array[key] === 'undefined') ? false : true;
         },
         isUndefined: function (variable) {
             return (typeof variable === 'undefined') ? true : false;

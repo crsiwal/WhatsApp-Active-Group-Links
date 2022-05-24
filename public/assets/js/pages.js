@@ -2,7 +2,36 @@
 
 $(document).ready(function () {
     $.extend(Application.prototype, {
-        /** Admin Dashboard Script */
+        /** Admin Dashboard Groups Page Script */
+        admin_load_category_groups: function (cid) {
+            let that = this;
+            let next_page = this.get_session("groups_list_next_page");
+            let formdata = this.formData("blankform", {
+                _ctid: cid,
+                _p: (this.isBlank(next_page) ? 0 : next_page)
+            });
+            if (formdata !== false) {
+                let options = { url: this.base_url('rest/groups'), type: "POST", data: formdata, processData: false, contentType: false };
+                this.callHttp(options, function (response) {
+                    if (response.status === "true") {
+                        let childs = response.data.childs;
+                        that.set_session("groups_list_next_page", response.data.next);
+                        if (that.isArray(childs) && that.getLength(childs) > 0) {
+                            that.addClass("groupslist", "blank", false);
+                            that.sethtml("groupslist", ``);
+                            $.each(childs, function (index, group) {
+                                let cssclass = (group.status == 1) ? "catenable" : "catdisable";
+                                that.sethtml("groupslist", `<li id="grplist_${group.id}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center pointer ${cssclass}" data-gid="${group.id}">
+                                <span class="ellipsis pr-4">${group.name}</span>
+                                <img class="img-fluid" src="${group.icon}" />
+                            </li>`, true);
+                            });
+                        }
+                    }
+                });
+            }
+        },
+        /** Admin Dashboard Category Page Script */
         admin_after_upload_category_banner: function (data) {
             this.sethtml("catbannerurl", data.url);
             this.set_attr("catbannerurl", "href", data.url);

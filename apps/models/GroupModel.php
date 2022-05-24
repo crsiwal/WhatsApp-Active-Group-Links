@@ -20,45 +20,61 @@ if (!class_exists('GroupModel')) {
             parent::__construct();
         }
 
-
-        public function groups($filter, $limit, $offset) {
+        public function groups($filter, $limit, $offset, $fields = []) {
             try {
-                $group_url = isset($filter["single"]) ? whatsapp_join_url("", true) : group_url("", true);
-                $thumbnail_url = url("", true);
-                $category_url = category_url("", true);
-                $this->db->select("a.name, b.name as category, CONCAT('$category_url', b.slug) as curl, a.invite_key, CONCAT('$group_url', a.invite_key) as url, CONCAT('$thumbnail_url', a.icon_url) as icon");
+                if (count($fields) == 0) {
+                    $group_url = isset($filter["single"]) ? whatsapp_join_url("", true) : group_url("", true);
+                    $thumbnail_url = url("", true);
+                    $category_url = category_url("", true);
+                    $this->db->select("a.name, b.name as category, CONCAT('$category_url', b.slug) as curl, a.invite_key, CONCAT('$group_url', a.invite_key) as url, CONCAT('$thumbnail_url', a.icon_url) as icon");
+                    $this->db->join("category as b", "a.category_id = b.id");
+                    $this->db->where("a.status", 1);
+                } else {
+                    $this->db->select($fields);
+                }
+
                 $this->db->from("groups as a");
-                $this->db->join("category as b", "a.category_id = b.id");
-                $this->db->where("a.status", 1);
 
                 if (isset($filter["id"])) {
                     $this->db->where("a.id", $filter["id"]);
                 }
+
                 if (isset($filter["invite_key"])) {
                     $this->db->where("a.invite_key", $filter["invite_key"]);
                 }
+
                 if (isset($filter["user_id"])) {
                     $this->db->where("a.user_id", $filter["user_id"]);
                 }
+
+                if (isset($filter["status"])) {
+                    $this->db->where_in("a.status", $filter["status"]);
+                }
+
                 if (isset($filter["category_id"])) {
                     $this->db->group_start();
                     $this->db->where("a.category_id", $filter["category_id"]);
                     $this->db->or_where("a.subcategory_id", $filter["category_id"]);
                     $this->db->group_end();
                 }
+
                 if (isset($filter["subcategory_id"])) {
                     $this->db->where("a.subcategory_id", $filter["subcategory_id"]);
                 }
+
                 if (isset($filter["country_id"])) {
                     $this->db->where("a.country_id", $filter["country_id"]);
                 }
+
                 if (isset($filter["city_id"])) {
                     $this->db->where("a.city_id", $filter["city_id"]);
                 }
+
                 if (!isset($filter["single"])) {
                     $this->db->order_by('a.id');
                     $this->db->limit($limit, $offset);
                 }
+
                 $query = $this->db->get();
                 if (isset($filter["single"])) {
                     return ($query->num_rows() > 0) ? $query->row() : [];

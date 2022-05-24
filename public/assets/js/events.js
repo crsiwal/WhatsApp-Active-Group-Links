@@ -24,6 +24,20 @@ $(document).ready(function () {
         }
     });
 
+    /** Admin Groups Page Actions */
+    $('body').on('click', '.ldgrplist li', function () {
+        let cid = $(this).data("cid");
+        let name = $.trim($(this).text());
+        let input_id = $(this).closest("div.collist-container").find("input.form-control").attr("id");
+        app.set(input_id, name);
+        if (input_id == "search_category") {
+            app.set("search_groups", ``);
+            app.sethtml("groupslist", ``);
+            app.addClass("groupslist", "blank");
+        }
+        app.admin_load_category_groups(cid);
+    });
+
     /** Admin Category Page Actions */
     $('body').on('click', '#ctr_upd_btn', function () {
         app.admin_update_category(this);
