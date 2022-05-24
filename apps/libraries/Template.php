@@ -241,7 +241,7 @@ if (!class_exists('Template')) {
             if (minify('css')) {
                 $this->addCss('fontawesome-link-css', true);
                 $this->addCss(['bootstrap-css', 'toast-css']);
-                $compressedFiles = $this->ci->config->item('compress_css_files');
+                $compressedFiles = $this->ci->config->item('minified_css_files');
                 if (is_array($compressedFiles) && count($compressedFiles) > 0) {
                     foreach ($compressedFiles as $filename => $path) {
                         $this->addCss($filename);
@@ -255,8 +255,9 @@ if (!class_exists('Template')) {
 
         private function javaScript() {
             if (minify('js')) {
-                $this->addJs('config-js', TRUE, TRUE);
-                $compressedFiles = $this->ci->config->item('compress_js_files');
+                $this->addJs(['jquery', 'bootstrap', 'toast']);
+                $this->addJs('config', TRUE, TRUE);
+                $compressedFiles = $this->ci->config->item('minified_js_files');
                 if (is_array($compressedFiles) && count($compressedFiles) > 0) {
                     foreach ($compressedFiles as $filename => $path) {
                         $this->addJs($filename);

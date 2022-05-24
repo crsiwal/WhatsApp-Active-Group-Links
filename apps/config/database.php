@@ -93,9 +93,9 @@ $db[ENVIRONMENT]['port'] = '3306';
 switch (ENVIRONMENT) {
     case 'production':
         $db[ENVIRONMENT]['hostname'] = '127.0.0.1';
-        $db[ENVIRONMENT]['username'] = 'root';
-        $db[ENVIRONMENT]['password'] = 'root';
-        $db[ENVIRONMENT]['database'] = 'whatsapp';
+        $db[ENVIRONMENT]['username'] = 'p1653rgv_whatsapp';
+        $db[ENVIRONMENT]['password'] = '-MreYXybD`a}CJ.}Xq;>=9!q5~;<5D!U';
+        $db[ENVIRONMENT]['database'] = 'p1653rgv_whatsapp';
         break;
     case 'testing':
         $db[ENVIRONMENT]['hostname'] = '127.0.0.1';
